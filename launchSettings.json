@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "StartRabbitMQ": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "rabbit": "StartWithoutDebugging"
+      }
+    }
+  }
+}
