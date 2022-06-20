@@ -2,6 +2,7 @@
 using RabbitMQ.Client.Events;
 using System.Text;
 
+var id = args.FirstOrDefault("");
 var factory = new ConnectionFactory() { HostName = "localhost" };
 
 using (var connection = factory.CreateConnection())
@@ -16,20 +17,29 @@ using (var connection = factory.CreateConnection())
 
     var consumer = new EventingBasicConsumer(channel);
 
-    consumer.Received += Consumer_Received;
+    consumer.Received += (model, ea) =>
+    {
+        var body = ea.Body;
+        var result = ProcessData(body.ToArray());
+
+        Console.WriteLine($"C[{id}]: message received: {result}");
+        channel.BasicAck(deliveryTag: ea.DeliveryTag, multiple: false);
+    };
 
     channel.BasicConsume(
         queue: "dev-queue",
-        autoAck: true,
+        autoAck: false,
         consumer: consumer);
 
-    Console.WriteLine("Consumer subscribed to the dev-queue");
+    Console.WriteLine($"C[{id}]: subscribed to the 'dev-queue'");
     Console.ReadLine();
 }
 
-void Consumer_Received(object? sender, BasicDeliverEventArgs e)
+string ProcessData(byte[] body)
 {
-    var body = e.Body;
-    var message = Encoding.UTF8.GetString(body.ToArray());
-    Console.WriteLine("Received message: {0}", message);
+    // Emulate a long-term operation
+    Thread.Sleep(Random.Shared.Next(1000, 15000)); // From 1 to 15 sec
+
+    var message = Encoding.UTF8.GetString(body);
+    return message;
 }
