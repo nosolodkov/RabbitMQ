@@ -14,13 +14,13 @@ internal static class ProcessManager
 
     public static readonly string PubliherExe = Path.Combine(
         Environment.CurrentDirectory,
-        "..\\..\\..\\Publisher\\",
+        "..\\..\\..\\DefaultExchange\\Publisher\\",
         Configuration,
         "Publisher.exe");
 
     public static readonly string ConsumerExe = Path.Combine(
         Environment.CurrentDirectory,
-        "..\\..\\..\\Consumer\\",
+        "..\\..\\..\\DefaultExchange\\Consumer\\",
         Configuration,
         "Consumer.exe");
 }

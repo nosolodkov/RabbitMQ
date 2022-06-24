@@ -5,7 +5,11 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <BaseOutputPath>..\bin\ServiceLauncher</BaseOutputPath>
+    <BaseOutputPath>$(SolutionDir)bin\DirectExchange\LogConsumer.Info</BaseOutputPath>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="RabbitMQ.Client" Version="6.4.0" />
+  </ItemGroup>
 
 </Project>
